@@ -2,27 +2,25 @@ import React from 'react';
 
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import { AxiosResponse } from 'axios';
 
 import { register } from '../../services/authService';
-import { AxiosResponse } from 'axios';
 
 // Define Schema of validation with Yup
 const registerSchema = Yup.object().shape(
   {
     name: Yup.string().required('Name is required'),
     email: Yup.string().email('Invalid Email Format').required('Email is required'),
-    password: Yup.string().required('Password is required'),
-    age: Yup.number().positive('Age has to be a positive number').integer('Age cant be a float number').required('Age is required')
+    password: Yup.string().min(8, 'Password too short').required('Password is required'),
+    confirm: Yup.string().when('password', {
+      is: (value: string) => (value && value.length > 0 ? true : false), 
+      then: Yup.string().oneOf(
+        [Yup.ref('password')], 'Passwords must match'
+      )
+    }).required('You must confirm your password'),
+    age: Yup.number().min(10, 'Age must be over 10 years old').required('Age is required')
   }
 );
-
-function validatePassword(values: any) {
-  let error;
-  if (values.password !== values.repeatPassword) {
-    error = 'Invalid password'
-  }
-  return error
-}
 
 // Register Component
 const RegisterForm = () => {
@@ -32,7 +30,7 @@ const RegisterForm = () => {
     name: '',
     email: '',
     password: '',
-    repeatPassword: '',
+    confirm: '',
     age: 18
   }
   
@@ -46,15 +44,13 @@ const RegisterForm = () => {
         onSubmit={ async(values) => {
           register(values.name, values.email, values.password, values.age).then((response: AxiosResponse) => {
             if (response.status === 200) {
-              if (response.data.token) {
-                sessionStorage.setItem('sessionToken', response.data.token)
-              } else {
-                throw new Error('Error generating Login Token')
-              }
+              console.log('User register correctly');
+              console.log(response.data);
+              alert('User registered correctly');
             } else {
-              throw new Error('Invalid credentials')
+              throw new Error('Error in registry');
             }
-          }).catch((error)=> console.error(`[LOGIN ERROR]: Something went wrong: ${error}`))
+          }).catch((error)=> console.error(`[REGISTER ERROR]: Something went wrong: ${error}`))
         }}
       >
         {
@@ -62,7 +58,7 @@ const RegisterForm = () => {
             <Form>
               {/* Name */}
               <label htmlFor='name'>Name</label>
-              <Field id='name' type='name' name='name' placeholder='Enter your Name' />
+              <Field id='name' type='text' name='name' placeholder='Enter your Name' />
 
               {/* Name Errors */}
               {
@@ -73,7 +69,7 @@ const RegisterForm = () => {
 
               {/* Age */}
               <label htmlFor='age'>Age</label>
-              <Field id='age' type='age' name='age' placeholder='Enter your age' />
+              <Field id='age' type='number' name='age' />
 
               {/* Age Errors */}
               {
@@ -95,7 +91,7 @@ const RegisterForm = () => {
 
               {/* Password */}
               <label htmlFor='password'>Password</label>
-              <Field id='password' type='password' name='password' placeholder='example' />
+              <Field id='password' type='password' name='password' placeholder='Password' />
 
               {/* Password Errors */}
               {
@@ -105,13 +101,13 @@ const RegisterForm = () => {
               }
 
               {/* Confirm Password */}
-              <label htmlFor='repeatPassword'>Confirm Password</label>
-              <Field id='repeatPassword' type='password' name='repeatPassword' placeholder='Repeat password' />
+              <label htmlFor='confirm'>Confirm Password</label>
+              <Field id='confirm' type='password' name='confirm' placeholder='Confirm your password' />
 
               {/* Confirm Password Errors */}
               {
-                errors.repeatPassword && touched.repeatPassword && (
-                  <ErrorMessage name='repeatPassword' component='div'></ErrorMessage>
+                errors.confirm && touched.confirm && (
+                  <ErrorMessage name='confirm' component='div'></ErrorMessage>
                 )
               }
 
@@ -121,7 +117,7 @@ const RegisterForm = () => {
               {/* Message if the form is submitting */}
               {
                 isSubmitting ? 
-                  (<p>Checking credentials...</p>) 
+                  (<p>Sending data to registry...</p>) 
                   : null
               }
             </Form>
