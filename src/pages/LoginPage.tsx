@@ -1,12 +1,9 @@
 import React from "react";
-import LoginForm from "../components/forms/LoginForm";
+import LoginForm from "../components/forms/LoginFormMUI";
 
 export const LoginPage = () => {
   return (
     <div>
-      <h1>
-        Login Page
-      </h1>
       <LoginForm />
     </div>
   )

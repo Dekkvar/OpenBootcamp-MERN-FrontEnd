@@ -20,7 +20,7 @@ export const StickyFooter = () => {
       }}>
         <Container maxWidth='sm'>
           <CopyRight sx={{
-            pt: 4
+            pt: 1
           }} />
         </Container>
       </Box>

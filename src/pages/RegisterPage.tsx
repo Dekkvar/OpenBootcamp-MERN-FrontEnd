@@ -1,12 +1,9 @@
 import React from "react";
-import RegisterForm from "../components/forms/RegisterForm";
+import RegisterForm from "../components/forms/RegisterFormMUI";
 
 export const RegisterPage = () => {
   return (
     <div>
-      <h1>
-        Register Page
-      </h1>
       <RegisterForm />
     </div>
   )

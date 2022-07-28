@@ -33,6 +33,7 @@ import Paper from '@mui/material/Paper';
 
 // List for the menu
 import { MenuItems } from './MenuItems';
+import { StickyFooter } from './StickyFooter';
 
 // Width for Drawer Menu
 const drawerWidth: number = 240;
@@ -202,6 +203,7 @@ export const Dashboard = () => {
           </Container>
         </Box>
       </Box>
+      <StickyFooter />
     </ThemeProvider>
   )
 }

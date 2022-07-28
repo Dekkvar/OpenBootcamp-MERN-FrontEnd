@@ -13,7 +13,7 @@ import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 export const MenuItems = (
   <React.Fragment>
     {/* Dashboard to Katas Button */}
-    <ListItemButton>
+    <ListItemButton href='/katas'>
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
