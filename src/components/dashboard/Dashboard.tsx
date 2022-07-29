@@ -34,6 +34,8 @@ import Paper from '@mui/material/Paper';
 // List for the menu
 import { MenuItems } from './MenuItems';
 import { StickyFooter } from './StickyFooter';
+import { NewEditor } from '../editor/NewEditor';
+import { TipTapEditor } from '../editor/TipTapEditor';
 
 // Width for Drawer Menu
 const drawerWidth: number = 240;
@@ -164,9 +166,11 @@ export const Dashboard = () => {
           <Toolbar />
           {/* Container whit the content */}
           {/* TODO: Change for the Navigation Content by URL and Stack of Routes */}
-          <Container maxWidth='lg' sx={{
+          <Container maxWidth='lg'  sx={{
+            display: 'grid',
             mt: 4,
-            mg: 4
+            mg: 4,
+            rowGap: 2
           }}>
             <Grid item xs={12} md={8} lg={9}>
               <Paper sx={{
@@ -175,7 +179,7 @@ export const Dashboard = () => {
                 flexDirection: 'column',
                 height: 240
               }}>
-
+                <NewEditor />
               </Paper>
             </Grid>
 
@@ -186,7 +190,6 @@ export const Dashboard = () => {
                 flexDirection: 'column',
                 height: 240
               }}>
-                
               </Paper>
             </Grid>
 
