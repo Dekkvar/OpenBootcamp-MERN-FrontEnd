@@ -36,6 +36,7 @@ import { MenuItems } from './MenuItems';
 import { StickyFooter } from './StickyFooter';
 import { NewEditor } from '../editor/NewEditor';
 import { TipTapEditor } from '../editor/TipTapEditor';
+import { FileUpdate } from '../uploader/FileUploader';
 
 // Width for Drawer Menu
 const drawerWidth: number = 240;
@@ -169,7 +170,7 @@ export const Dashboard = () => {
           <Container maxWidth='lg'  sx={{
             display: 'grid',
             mt: 4,
-            mg: 4,
+            mb: 4,
             rowGap: 2
           }}>
             <Grid item xs={12} md={8} lg={9}>
@@ -177,7 +178,7 @@ export const Dashboard = () => {
                 p: 2,
                 display: 'flex',
                 flexDirection: 'column',
-                height: 240
+                minHeight: 240
               }}>
                 <NewEditor />
               </Paper>
@@ -188,8 +189,9 @@ export const Dashboard = () => {
                 p: 2,
                 display: 'flex',
                 flexDirection: 'column',
-                height: 240
+                minHeight: 240
               }}>
+                <FileUpdate />
               </Paper>
             </Grid>
 
@@ -198,7 +200,7 @@ export const Dashboard = () => {
                 p: 2,
                 display: 'flex',
                 flexDirection: 'column',
-                height: 240
+                minHeight: 240
               }}>
                 
               </Paper>
